@@ -8,8 +8,8 @@ import { map } from 'rxjs/operators';
 export class YoutubeService {
 
   private youtubeUrl = 'https://www.googleapis.com/youtube/v3';
-  private apikey = 'your aki key';
-  private playlist = 'playlist id';
+  private apikey = 'your apikey';
+  private playlist = 'your playlist id';
   private nextPageToken = '';
 
   constructor(private http: HttpClient) { }
@@ -22,6 +22,9 @@ export class YoutubeService {
     .set('maxResults', '10')
     .set('playlistId', this.playlist)
     .set('key', this.apikey);
+    if (this.nextPageToken) {
+      params.set('pageToken', this.nextPageToken);
+    }
 
     return this.getQuery(query, params).pipe(map(res => {
       console.log(res);
